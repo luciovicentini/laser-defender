@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -2642857652221409711}
   - component: {fileID: 2593899708565854724}
   - component: {fileID: 3151594073879603545}
+  - component: {fileID: 5535709673881653563}
   m_Layer: 7
   m_Name: Enemy 0
   m_TagString: Untagged
@@ -187,3 +188,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 25
+--- !u!114 &5535709673881653563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557941000229423489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e119c614a1b94bb1bfeb85d98f2ebac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 25409833618149756, guid: 46edf4070a94e4b9aba3352493813b9e, type: 3}
+  projectileSpeed: 10
+  projectileLifetime: 2
+  firingRate: 1
+  enemyFiringRate: 3
+  enemyFiringRateVariance: 0.5
+  minimumEnemyFiringRate: 0.1
+  useAI: 1
