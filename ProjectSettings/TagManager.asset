@@ -38,8 +38,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1977513281
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Explotions
+    uniqueID: 2685044291
+    locked: 0
+  - name: Projectiles
+    uniqueID: 2917274051
     locked: 0
   - name: Player
     uniqueID: 3774632325

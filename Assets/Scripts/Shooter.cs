@@ -10,11 +10,11 @@ public class Shooter : MonoBehaviour
     [SerializeField] float projectileSpeed = 10;
     [SerializeField] float projectileLifetime = 2f;
 
-    [SerializeField] float firingRate = 0.2f;
+    [SerializeField] [Range(0f, 1f)] float firingRate = 0.2f;
 
     [Header("AI")]
     [SerializeField] bool useAI;
-    [SerializeField] float enemyFiringRate = 1f;
+    [SerializeField] [Range(0f, 1f)] float enemyFiringRate = 1f;
     [SerializeField] float firingRateVariance = 0f;
     [SerializeField] float minimumEnemyFiringRate = 0.5f;
 
@@ -23,22 +23,28 @@ public class Shooter : MonoBehaviour
 
     Coroutine firingCoroutine;
 
+    AudioPlayer audioPlayer;
+
     public bool IsFiring() => isFiring;
     public void SetIsFiring(bool value) => isFiring = value;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        audioPlayer = FindObjectOfType<AudioPlayer>();
+    }
+
     void Start()
     {
         if (useAI)
         {
             isFiring = true;
-            if (projectileSpeed > 0) {
+            if (projectileSpeed > 0)
+            {
                 projectileSpeed *= -1;
-            } 
+            }
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         Fire();
@@ -68,13 +74,29 @@ public class Shooter : MonoBehaviour
                 projectileRb.velocity = transform.up * projectileSpeed;
             }
             Destroy(projectileShooted, projectileLifetime);
-            
-            float firingRate = useAI ? GetRandomFireRate() : this.firingRate;
+
+            float firingRate = useAI ? GetEnemyRandomFireRate() : this.firingRate;
+            Logging(firingRate);
+            PlayShootingSFX();
             yield return new WaitForSeconds(firingRate);
         }
     }
-    
-    float GetRandomFireRate()
+
+    private void Logging(float firingRate)
+    {
+        Debug.Log("Firing Rate = " + firingRate);
+        string whoIsFiring = useAI ? "AI" : "Player";
+        Debug.Log(whoIsFiring + " is firing");
+    }
+
+    void PlayShootingSFX()
+    {
+        if (audioPlayer == null) return;
+
+        audioPlayer.PlayShootingClip();
+    }
+
+    float GetEnemyRandomFireRate()
     {
         float fireRate = Random.Range(enemyFiringRate - firingRateVariance,
                                         enemyFiringRate + firingRateVariance);
