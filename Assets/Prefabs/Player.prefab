@@ -172,7 +172,7 @@ MonoBehaviour:
   moveSpeed: 4
   paddingLeft: 0.5
   paddingRight: 0.5
-  paddingTop: 5
+  paddingTop: 8
   paddingBottom: 2
 --- !u!50 &5862408176249898531
 Rigidbody2D:
@@ -226,7 +226,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 25409833618149756, guid: 9ea343d14f3ea4c639b49a77ccfcc9d9, type: 3}
   projectileSpeed: 10
   projectileLifetime: 5
-  firingRate: 15.85
+  firingRate: 0.4
   useAI: 0
   enemyFiringRate: 1
   firingRateVariance: 0
