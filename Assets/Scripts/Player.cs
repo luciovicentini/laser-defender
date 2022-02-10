@@ -46,7 +46,6 @@ public class Player : MonoBehaviour
     
     void OnFire(InputValue value)
     {
-        Debug.Log("OnFire pressed " + value.isPressed);
         if (shooter != null)
         {
             shooter.SetIsFiring(value.isPressed);

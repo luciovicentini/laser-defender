@@ -5,21 +5,12 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
 
-    [Header("General")]
-    [SerializeField] GameObject projectilePrefab;
-    [SerializeField] float projectileSpeed = 10;
-    [SerializeField] float projectileLifetime = 2f;
+    // [Header("General")]
+    [SerializeField] protected float projectileSpeed = 10;
+    [SerializeField] protected float projectileLifetime = 2f;
+    // [SerializeField] [Range(0f, 1f)] protected float firingRate = 0.2f;
 
-    [SerializeField] [Range(0f, 1f)] float firingRate = 0.2f;
-
-    [Header("AI")]
-    [SerializeField] bool useAI;
-    [SerializeField] [Range(0f, 1f)] float enemyFiringRate = 1f;
-    [SerializeField] float firingRateVariance = 0f;
-    [SerializeField] float minimumEnemyFiringRate = 0.5f;
-
-
-    bool isFiring;
+    protected bool isFiring;
 
     Coroutine firingCoroutine;
 
@@ -33,28 +24,11 @@ public class Shooter : MonoBehaviour
         audioPlayer = FindObjectOfType<AudioPlayer>();
     }
 
-    void Start()
-    {
-        if (useAI)
-        {
-            isFiring = true;
-            if (projectileSpeed > 0)
-            {
-                projectileSpeed *= -1;
-            }
-        }
-    }
-
-    void Update()
-    {
-        Fire();
-    }
-
-    void Fire()
+    protected void Fire(GameObject gameObject, float firingRate)
     {
         if (isFiring && firingCoroutine == null)
         {
-            firingCoroutine = StartCoroutine(FireContinuously());
+            firingCoroutine = StartCoroutine(FireContinuously(gameObject, firingRate));
         }
         else if (!isFiring && firingCoroutine != null)
         {
@@ -63,11 +37,11 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    IEnumerator FireContinuously()
+    IEnumerator FireContinuously(GameObject gameObject, float firingRate)
     {
         while (true)
         {
-            GameObject projectileShooted = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            GameObject projectileShooted = Instantiate(gameObject, transform.position, Quaternion.identity);
             Rigidbody2D projectileRb = projectileShooted.GetComponent<Rigidbody2D>();
             if (projectileRb != null)
             {
@@ -75,18 +49,10 @@ public class Shooter : MonoBehaviour
             }
             Destroy(projectileShooted, projectileLifetime);
 
-            float firingRate = useAI ? GetEnemyRandomFireRate() : this.firingRate;
-            Logging(firingRate);
+            // float firingRate = useAI ? GetEnemyRandomFireRate() : this.firingRate;
             PlayShootingSFX();
             yield return new WaitForSeconds(firingRate);
         }
-    }
-
-    private void Logging(float firingRate)
-    {
-        Debug.Log("Firing Rate = " + firingRate);
-        string whoIsFiring = useAI ? "AI" : "Player";
-        Debug.Log(whoIsFiring + " is firing");
     }
 
     void PlayShootingSFX()
@@ -94,13 +60,5 @@ public class Shooter : MonoBehaviour
         if (audioPlayer == null) return;
 
         audioPlayer.PlayShootingClip();
-    }
-
-    float GetEnemyRandomFireRate()
-    {
-        float fireRate = Random.Range(enemyFiringRate - firingRateVariance,
-                                        enemyFiringRate + firingRateVariance);
-
-        return Mathf.Clamp(fireRate, minimumEnemyFiringRate, float.MaxValue);
     }
 }

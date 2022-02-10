@@ -800,11 +800,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveConfigs:
   - {fileID: 11400000, guid: 6628db3b12e63474cb33eac487408e9a, type: 2}
-  - {fileID: 11400000, guid: 69d38810d3822408ea760c9a4872443a, type: 2}
   - {fileID: 11400000, guid: 6628db3b12e63474cb33eac487408e9a, type: 2}
   - {fileID: 11400000, guid: 69d38810d3822408ea760c9a4872443a, type: 2}
+  - {fileID: 11400000, guid: 69d38810d3822408ea760c9a4872443a, type: 2}
+  - {fileID: 11400000, guid: 56719fdd529d5451991375f88de6cf2b, type: 2}
+  - {fileID: 11400000, guid: 56719fdd529d5451991375f88de6cf2b, type: 2}
+  - {fileID: 11400000, guid: 247a72885bb02497b802c16efb14c8ee, type: 2}
+  - {fileID: 11400000, guid: 247a72885bb02497b802c16efb14c8ee, type: 2}
+  - {fileID: 11400000, guid: 58e1f8d0e24f9495382d444b3388b549, type: 2}
+  - {fileID: 11400000, guid: 58e1f8d0e24f9495382d444b3388b549, type: 2}
+  - {fileID: 11400000, guid: 87257f3cf5f96434c9931a5dcc18c163, type: 2}
+  - {fileID: 11400000, guid: 87257f3cf5f96434c9931a5dcc18c163, type: 2}
   timeBetweenWaves: 2
   isLooping: 1
+  startingWave: 0
 --- !u!4 &1240839157
 Transform:
   m_ObjectHideFlags: 0

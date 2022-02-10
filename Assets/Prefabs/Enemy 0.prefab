@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2642857652221409711}
   - component: {fileID: 2593899708565854724}
   - component: {fileID: 3151594073879603545}
-  - component: {fileID: 5535709673881653563}
+  - component: {fileID: -6382705867624840018}
   m_Layer: 7
   m_Name: Enemy 0
   m_TagString: Untagged
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: -1691838157
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d0dcfd9859fe64160a8c7cf1b4c65578, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6f6c4709519004ae6af22c8433d8ed9a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -107,7 +107,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.82, y: 0.84}
+    oldSize: {x: 0.93, y: 0.84}
     newSize: {x: 0.82, y: 0.84}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -176,6 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayer: 0
   health: 50
+  score: 50
   hitEffect: {fileID: 6731689286402136155, guid: 4286a05a2f0ee4dc5bb295f90f41cc0b, type: 3}
   applyCameraShake: 0
 --- !u!114 &3151594073879603545
@@ -191,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 50
---- !u!114 &5535709673881653563
+--- !u!114 &-6382705867624840018
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -200,14 +201,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5557941000229423489}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e119c614a1b94bb1bfeb85d98f2ebac, type: 3}
+  m_Script: {fileID: 11500000, guid: aa4b4f417e32d45bf955147a84147539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 25409833618149756, guid: 46edf4070a94e4b9aba3352493813b9e, type: 3}
   projectileSpeed: 5
-  projectileLifetime: 2
-  firingRate: 0.5
-  useAI: 1
-  enemyFiringRate: 0.8
-  firingRateVariance: 1
-  minimumEnemyFiringRate: 0.1
+  projectileLifetime: 3
+  projectilePrefab: {fileID: 25409833618149756, guid: 46edf4070a94e4b9aba3352493813b9e, type: 3}
+  enemyFiringRate: 2
+  firingRateVariance: 0.5
+  minimumEnemyFiringRate: 0.5

@@ -24,7 +24,6 @@ public class ScoreKeeper : MonoBehaviour
         ManageSingleton();
     }
 
-    [SerializeField] int destroyEnemyScore = 100;
     int currentScore = 0;
 
     public int GetCurrentScore() => currentScore;
@@ -36,8 +35,6 @@ public class ScoreKeeper : MonoBehaviour
     }
 
     public void ResetCurrentScore() => currentScore = 0;
-
-    public int GetDestroyEnemyScore() => destroyEnemyScore;
 
     public string NormalizedScore()
     {
