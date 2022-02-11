@@ -16,6 +16,7 @@ public class Health : MonoBehaviour
 
     AudioPlayer audioPlayer;
     ScoreKeeper scoreKeeper;
+    ShowScore showScore;
 
     UIDisplay uiDisplay;
     LevelManager levelManager;
@@ -27,6 +28,7 @@ public class Health : MonoBehaviour
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
         uiDisplay = FindObjectOfType<UIDisplay>();
         levelManager = FindObjectOfType<LevelManager>();
+        showScore = FindObjectOfType<ShowScore>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -62,6 +64,7 @@ public class Health : MonoBehaviour
         }
         else
         {
+            if (showScore != null) showScore.show(score);
             scoreKeeper.AddToCurrentScore(score);
         }
     }
