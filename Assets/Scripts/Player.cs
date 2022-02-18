@@ -17,7 +17,10 @@ public class Player : MonoBehaviour
 
     Shooter shooter;
 
-    private void Awake() {
+    bool shouldMove = false;
+
+    private void Awake()
+    {
         shooter = GetComponent<Shooter>();
     }
 
@@ -27,6 +30,8 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        if (!shouldMove) return;
+
         Move();
     }
 
@@ -43,13 +48,13 @@ public class Player : MonoBehaviour
     {
         rawInput = value.Get<Vector2>();
     }
-    
+
     void OnFire(InputValue value)
     {
-        if (shooter != null)
-        {
-            shooter.SetIsFiring(value.isPressed);
-        }
+        if (shooter == null) return;
+        if (shouldMove == false) return;
+
+        shooter.SetIsFiring(value.isPressed);
     }
 
     void InitBounds()
@@ -57,5 +62,10 @@ public class Player : MonoBehaviour
         Camera mainCamera = Camera.main;
         minBounds = mainCamera.ViewportToWorldPoint(new Vector2(0, 0));
         maxBounds = mainCamera.ViewportToWorldPoint(new Vector2(1, 1));
+    }
+
+    public void setShouldMove(bool shouldMove)
+    {
+        this.shouldMove = shouldMove;
     }
 }

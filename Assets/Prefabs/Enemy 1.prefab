@@ -223,5 +223,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3327a2d6147504845a810e3a88e93ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreTextUI: {fileID: 0}
+  scoreTextUI: {fileID: 8431955606994697021, guid: 13297d9410aa348d4809f4b6e1125736, type: 3}
   scoreTextTime: 1
