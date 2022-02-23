@@ -44,12 +44,12 @@ public class Player : MonoBehaviour
         transform.position = newPos;
     }
 
-    void OnMove(InputValue value)
+    public void OnMove(InputValue value)
     {
         rawInput = value.Get<Vector2>();
     }
 
-    void OnFire(InputValue value)
+    public void OnFire(InputValue value)
     {
         if (shooter == null) return;
         if (shouldMove == false) return;

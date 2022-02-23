@@ -84,7 +84,7 @@ public class PlayerSelector : MonoBehaviour
         }
     }
 
-    void OnMove(InputValue value)
+    public void OnMove(InputValue value)
     {
         if (!readyToMove) return;
         Vector2 rawInput = value.Get<Vector2>();
@@ -99,7 +99,7 @@ public class PlayerSelector : MonoBehaviour
         }
     }
 
-    void OnFire()
+    public void OnFire()
     {
         if (!readyToSelect) return;
         state = State.Selected;
