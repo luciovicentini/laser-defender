@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class PlayerSelector : MonoBehaviour
 {
+    private const string SHIP_SELECT_TAG = "ShipSelect";
     [SerializeField] float selectionMoveSpeed = 1f;
     [SerializeField] TextMeshProUGUI shipNameTextMesh;
     [SerializeField] Button nextShipButton;
@@ -17,30 +18,31 @@ public class PlayerSelector : MonoBehaviour
     List<float> shipXPositions = new List<float>();
 
     int selectedShipIndex = 0;
-    enum SelectionState
+    enum State
     {
         Idle,
         Left,
         Right,
         Selected,
+        Finished,
     }
-    SelectionState moveState = SelectionState.Idle;
+    State state = State.Idle;
 
     bool readyToMove = true;
+    bool readyToSelect = true;
 
-    GameSceneCordinator gameSceneCordinator;
+    Sprite selectedSprite;
 
     void Awake()
     {
         GetPlayerSelectionShips();
-        gameSceneCordinator = FindObjectOfType<GameSceneCordinator>();
     }
 
     void GetPlayerSelectionShips()
     {
         foreach (Transform child in this.gameObject.transform)
         {
-            if (child.tag == "ShipSelect")
+            if (child.tag == SHIP_SELECT_TAG)
             {
                 playerShips.Add(child);
                 shipXPositions.Add(child.position.x);
@@ -50,66 +52,35 @@ public class PlayerSelector : MonoBehaviour
 
     void Update()
     {
-        if (moveState == SelectionState.Idle)
+        switch (state)
         {
-            ToggleButtons(true);
-            ToggleShipName(true);
-            HideFirstAndLastShipButtons();
-            return;
-        }
-        if (moveState == SelectionState.Right)
-        {
-            ToggleButtons(false);
-            HandleShipNameChange();
-            AnimateShipSelection();
-
-        }
-        if (moveState == SelectionState.Left)
-        {
-            ToggleButtons(false);
-            HandleShipNameChange();
-            AnimateShipSelection();
-        }
-        if (moveState == SelectionState.Selected)
-        {
-            DestroyUI();
-            HideShipsExceptSelected();
-            gameSceneCordinator.SetSelectedSprite(GetSelectedSprite());
-            AnimateSelectedShipOffScreen();
-        }
-    }
-
-    private void DestroyUI()
-    {
-        Destroy(shipSelectionCanvas.gameObject);
-    }
-
-    private void HideShipsExceptSelected()
-    {
-        for (int i = 0; i < playerShips.Count; i++)
-        {
-            if (i == selectedShipIndex) continue;
-            playerShips[i].gameObject.SetActive(false);
-        }
-    }
-
-    private Sprite GetSelectedSprite()
-    {
-        Sprite sprite = playerShips[selectedShipIndex].gameObject.GetComponent<SpriteRenderer>().sprite;
-        Debug.Log(sprite);
-        return sprite;
-    }
-
-    private void AnimateSelectedShipOffScreen()
-    {
-        float delta = selectionMoveSpeed * Time.deltaTime;
-        Vector2 target = new Vector2(transform.position.x, 20);
-        transform.position = Vector2.MoveTowards(transform.position, target, delta);
-
-        if (transform.position.y == target.y)
-        {
-            Destroy(this.gameObject);
-            gameSceneCordinator.StartGame();
+            case State.Idle:
+                readyToMove = true;
+                readyToSelect = true;
+                ToggleButtons(true);
+                ToggleShipName(true);
+                HideFirstAndLastShipButtons();
+                return;
+            case State.Right:
+                readyToSelect = false;
+                ToggleButtons(false);
+                HandleShipNameChange();
+                AnimateShipSelection();
+                return;
+            case State.Left:
+                readyToSelect = false;
+                ToggleButtons(false);
+                HandleShipNameChange();
+                AnimateShipSelection();
+                return;
+            case State.Selected:
+                readyToMove = false;
+                readyToSelect = false;
+                SaveSelectedSprite();
+                DestroyUI();
+                HideShipsExceptSelected();
+                AnimateSelectedShipOffScreen();
+                return;
         }
     }
 
@@ -128,12 +99,61 @@ public class PlayerSelector : MonoBehaviour
         }
     }
 
+    void OnFire()
+    {
+        if (!readyToSelect) return;
+        state = State.Selected;
+    }
+
+    private void DestroyUI()
+    {
+        Destroy(shipSelectionCanvas.gameObject);
+    }
+
+    private void HideShipsExceptSelected()
+    {
+        for (int i = 0; i < playerShips.Count; i++)
+        {
+            if (i == selectedShipIndex) continue;
+            playerShips[i].gameObject.SetActive(false);
+        }
+    }
+
+    private void SaveSelectedSprite()
+    {
+        selectedSprite = playerShips[selectedShipIndex].gameObject.GetComponent<SpriteRenderer>().sprite;
+    }
+
+    private void AnimateSelectedShipOffScreen()
+    {
+        float delta = selectionMoveSpeed * Time.deltaTime;
+        Vector2 target = new Vector2(transform.position.x, 20);
+        transform.position = Vector2.MoveTowards(transform.position, target, delta);
+
+        if (transform.position.y == target.y)
+        {
+            RemoveShipsFromScene();
+            state = State.Finished;
+        }
+    }
+
+    private void RemoveShipsFromScene()
+    {
+        foreach (Transform child in this.gameObject.transform)
+        {
+            if (child.tag == SHIP_SELECT_TAG)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
+
     void SelectNextShip()
     {
         if (selectedShipIndex >= playerShips.Count - 1) return;
         readyToMove = false;
         selectedShipIndex++;
-        moveState = SelectionState.Right;
+        state = State.Right;
     }
 
     void SelectPrevShip()
@@ -141,21 +161,8 @@ public class PlayerSelector : MonoBehaviour
         if (selectedShipIndex <= 0) return;
         readyToMove = false;
         selectedShipIndex--;
-        moveState = SelectionState.Left;
+        state = State.Left;
     }
-
-    /* void AnimateToNextShip()
-    {
-        float v = shipXPositions[selectedShipIndex];
-        float delta = selectionMoveSpeed * Time.deltaTime;
-        transform.position = Vector2.MoveTowards(transform.position, new Vector2(v * -1, transform.position.y), delta);
-
-        if (Mathf.Abs(transform.position.x) == Mathf.Abs(v))
-        {
-            readyToMove = true;
-            moveState = MoveState.Idle;
-        }
-    } */
 
     void AnimateShipSelection()
     {
@@ -166,8 +173,7 @@ public class PlayerSelector : MonoBehaviour
 
         if (Mathf.Abs(transform.position.x) == Mathf.Abs(v))
         {
-            readyToMove = true;
-            moveState = SelectionState.Idle;
+            state = State.Idle;
         }
     }
 
@@ -223,8 +229,7 @@ public class PlayerSelector : MonoBehaviour
         SetShipName(shipName);
     }
 
-    void OnFire()
-    {
-        moveState = SelectionState.Selected;
-    }
+    public bool Finished() => state == State.Finished;
+
+    public Sprite GetSelectedSprite() => selectedSprite;
 }

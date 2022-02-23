@@ -20,11 +20,6 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        
-    }
-
     public void StartSpawner()
     {
         StartCoroutine(SpawnEnemyWaves());
