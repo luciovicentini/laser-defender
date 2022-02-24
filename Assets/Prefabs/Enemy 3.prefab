@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3151594073879603545}
   - component: {fileID: 6610460202180395171}
   - component: {fileID: -1665818368631891590}
+  - component: {fileID: 5321481857041629567}
   m_Layer: 7
   m_Name: Enemy 3
   m_TagString: Untagged
@@ -225,3 +226,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreTextUI: {fileID: 8431955606994697021, guid: 13297d9410aa348d4809f4b6e1125736, type: 3}
   scoreTextTime: 1
+--- !u!114 &5321481857041629567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557941000229423489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2406d80d682346409698aede35768f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPrefab: {fileID: 5069220884858641192, guid: e718050e066e24e128e59bb6a3ffaf9c, type: 3}

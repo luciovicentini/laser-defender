@@ -21,6 +21,10 @@ public class Health : MonoBehaviour
     UIDisplay uiDisplay;
     LevelManager levelManager;
 
+    PowerUpDispenser powerUpDispenser;
+
+    int maxHealth;
+
     private void Awake()
     {
         cameraShake = Camera.main.GetComponent<CameraShake>();
@@ -29,6 +33,8 @@ public class Health : MonoBehaviour
         uiDisplay = FindObjectOfType<UIDisplay>();
         levelManager = FindObjectOfType<LevelManager>();
         showScore = FindObjectOfType<ShowScore>();
+        powerUpDispenser = GetComponent<PowerUpDispenser>();
+        maxHealth = health;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -41,6 +47,12 @@ public class Health : MonoBehaviour
             PlayExplotionSFX();
             ShakeCamera();
             damageDealer.Hit();
+        }
+        if (!isPlayer) return;
+        if (other.gameObject.tag == "HealthPickUp")
+        {
+            int healthAmount = other.GetComponent<HealthPickUp>().GetHealthAmount();
+            AddHealth(healthAmount);
         }
     }
 
@@ -56,7 +68,6 @@ public class Health : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
         if (isPlayer)
         {
             if (levelManager == null) return;
@@ -66,7 +77,9 @@ public class Health : MonoBehaviour
         {
             if (showScore != null) showScore.show(score);
             scoreKeeper.AddToCurrentScore(score);
+            powerUpDispenser.OnEnemyDestroyed();
         }
+        Destroy(gameObject);
     }
 
     void PlayHitEffect()
@@ -93,5 +106,16 @@ public class Health : MonoBehaviour
     }
 
     public int GetHealth() => health;
+
+    public void AddHealth(int amount)
+    {
+        if (!isPlayer) return;
+        
+        if (health + amount > maxHealth) {
+            health = maxHealth;
+        } else {
+            health += amount;
+        }
+    }
 
 }

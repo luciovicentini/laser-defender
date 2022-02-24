@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3151594073879603545}
   - component: {fileID: 4424259903598828704}
   - component: {fileID: 5680250475060232673}
+  - component: {fileID: 2627063648105504071}
   m_Layer: 7
   m_Name: Enemy 2
   m_TagString: Untagged
@@ -116,20 +117,23 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.0628408, y: 0.42166796}
-      - {x: 0.0631295, y: 0.32152075}
-      - {x: -0.061517775, y: 0.31992778}
-      - {x: -0.062164254, y: 0.4225538}
-      - {x: -0.19185042, y: 0.4234392}
-      - {x: -0.40828034, y: 0.29044855}
-      - {x: -0.41, y: -0.20211208}
-      - {x: -0.1394147, y: -0.36060297}
-      - {x: -0.10854198, y: -0.42}
+    - - {x: 0.12173551, y: 0.30041412}
+      - {x: 0.12202422, y: 0.25742942}
+      - {x: -0.0014563906, y: 0.29153815}
+      - {x: -0.11868029, y: 0.2541043}
+      - {x: -0.12798777, y: 0.3013}
+      - {x: -0.31137204, y: 0.421707}
+      - {x: -0.48103264, y: 0.41516677}
+      - {x: -0.28354955, y: -0.31816936}
+      - {x: -0.17242867, y: -0.31736705}
+      - {x: -0.17405866, y: -0.36753178}
+      - {x: -0.117202975, y: -0.42}
       - {x: 0.11049618, y: -0.42}
-      - {x: 0.13937993, y: -0.35670817}
-      - {x: 0.41, y: -0.20076632}
-      - {x: 0.41, y: 0.31}
-      - {x: 0.18497644, y: 0.4233937}
+      - {x: 0.1755612, y: -0.3665988}
+      - {x: 0.17402388, y: -0.32033202}
+      - {x: 0.28008515, y: -0.32028794}
+      - {x: 0.4844845, y: 0.41739628}
+      - {x: 0.30623028, y: 0.41646492}
 --- !u!114 &3621386465323610892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,3 +229,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreTextUI: {fileID: 8431955606994697021, guid: 13297d9410aa348d4809f4b6e1125736, type: 3}
   scoreTextTime: 1
+--- !u!114 &2627063648105504071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557941000229423489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2406d80d682346409698aede35768f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPrefab: {fileID: 5069220884858641192, guid: e718050e066e24e128e59bb6a3ffaf9c, type: 3}
